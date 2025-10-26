@@ -1,17 +1,31 @@
-import { LoginForm } from "./components/_loginForm";
-import Image from "next/image";
+"use client";
+
+import api from "@/common/hooks/api";
+import { useAuthStore } from "@/common/stores/auth";
+import { LoginForm } from "@/components/login-form";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
+  const setToken = useAuthStore(state => state.setToken)
+  const setUser = useAuthStore(state => state.setUser)
+  const router = useRouter()
+
+  const handleLogin = async (form: unknown) => {
+    await api('/v1/auth/sign-in', {
+      method: 'POST',
+      data: form
+    }).then(res => {
+      const data = res.data
+      setToken(data.accessToken)
+      setUser(data.user)
+      router.push('/')
+    })
+  }
+
   return (
-    <div>
-      <div className="h-screen relative">
-        <div className="bg-secondary h-full pt-12">
-          <Image src="/assets/img/logo.png" className="mx-auto box-shadow: 0 0 20px 5px rgba(255,255,255,0.6); border-radius: 10px;" alt="logo" width={200} height={80} />
-        </div>
-        <div className="absolute bg-white opacity-[0.5] bottom-0 left-1/2 -translate-x-1/2 rounded-t-4xl h-[43.8rem] w-[90%]" />
-        <div className="absolute bg-white bottom-0 left-0 rounded-t-4xl h-[43rem]">
-          <LoginForm />
-        </div>
+    <div className="flex h-screen items-center justify-center bg-muted overflow-hidden">
+      <div className="w-full max-w-sm md:max-w-4xl p-6 md:p-10">
+        <LoginForm onLogin={handleLogin} />
       </div>
     </div>
   );

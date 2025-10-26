@@ -1,11 +1,10 @@
-// middleware.ts (root)
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { combinedMiddleware } from "./common/middleware";
 
 export function middleware(req: NextRequest) {
-  // return NextResponse.redirect(new URL("/test", req.url));
+  return combinedMiddleware(req);
 }
 
 export const config = {
-  matcher: '/auth',
+  matcher: ["/((?!_next|favicon.ico|assets|static).*)"],
 };
