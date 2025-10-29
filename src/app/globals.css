@@ -43,6 +43,10 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+@theme {
+  --color-description: var(--color-description);
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -78,6 +82,7 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --color-description: #696969;
 }
 
 .dark {
@@ -114,6 +119,7 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --color-description: #696969;
 }
 
 @layer base {
@@ -123,4 +129,17 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer components {
+  .custom-swiper .swiper-pagination-bullet {
+    @apply !bg-gray-400;
+  }
+  .custom-swiper .swiper-pagination-bullet-active {
+    @apply !bg-primary;
+  }
+}
+
+p {
+  margin: 0;
 }

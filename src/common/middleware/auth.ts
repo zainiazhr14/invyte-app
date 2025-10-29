@@ -7,7 +7,7 @@ export function authMiddleware(req: NextRequest) {
   const token = useAuthStore.getState().token;
   const user = useAuthStore.getState().user;
   const pathname = req.nextUrl.pathname;
-  const whitelists = ['/auth']
+  const whitelists = ['/auth', '/auth/verification'];
 
   if (whitelists.some((path) => pathname.startsWith(path))) {
     return NextResponse.next();
